@@ -1,6 +1,6 @@
 import { Grid, PhotosGalleryItem } from 'components';
 
-export const PhotosGallery = ({ photos }) => {
+export const PhotosGallery = ({ photos, openModal }) => {
   return (
     <Grid>
       {photos.map(photo => {
@@ -10,6 +10,7 @@ export const PhotosGallery = ({ photos }) => {
               avg_color={photo.avg_color}
               alt={photo.alt}
               src={photo.src}
+              openModal={openModal}
             />
           </li>
         );

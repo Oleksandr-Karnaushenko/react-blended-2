@@ -1,5 +1,12 @@
 import { getPhotos } from 'apiService/photos';
-import { Form, PhotosGallery, Text, Button, Loader } from 'components';
+import {
+  Form,
+  PhotosGallery,
+  Text,
+  Button,
+  Loader,
+  ImageModal,
+} from 'components';
 import { useEffect, useState } from 'react';
 
 export const Photos = () => {
@@ -10,6 +17,8 @@ export const Photos = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalImage, setModalImage] = useState({})
 
   useEffect(() => {
     if (!query) return;
@@ -46,16 +55,29 @@ export const Photos = () => {
     setPage(prevState => prevState + 1);
   };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setModalImage({});
+  };
+
+  const openModal = (image) => {
+    setModalIsOpen(true);
+    setModalImage(image)
+  };
   return (
     <>
       <Form onSubmit={onSubmit} />
-      {images.length > 0 && <PhotosGallery photos={images} />}
+      {images.length > 0 && (
+        <PhotosGallery photos={images} openModal={openModal} />
+      )}
       {isEmpty && <Text textAlign="center">We can not find photos 🔎</Text>}
       {showLoadMore && <Button onClick={onLoadMore}>Load more</Button>}
       {error && (
         <Text textAlign="center">Error. Something get wrong! {error}</Text>
       )}
       {isLoading && <Loader />}
+
+      <ImageModal modalIsOpen={modalIsOpen} closeModal={closeModal} src={modalImage.src } alt={modalImage.alt } />
     </>
   );
 };

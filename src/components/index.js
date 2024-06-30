@@ -11,3 +11,4 @@ export * from './TodoList/TodoList';
 export * from './TodoListItem/TodoListItem';
 export * from './Grid/Grid';
 export * from './GridItem/GridItem';
+export * from './ImageModal/ImageModal.jsx';
